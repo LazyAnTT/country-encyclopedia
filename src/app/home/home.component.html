@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="input-group my-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search for a country"
+          aria-label="Search for a country"
+          [(ngModel)]="searchQuery"
+          (ngModelChange)="onSearchQueryChanged()"
+        />
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-search"
+          (click)="filterCountries()"
+        >
+          <i class="bi bi-search">search</i>
+        </button>
+      </div>
+
+      <h2>Favorite Countries</h2>
+      <ul>
+        <li *ngFor="let country of favoriteCountries">
+          {{ country.name.common }}
+        </li>
+      </ul>
+
+      <div class="row row-cols-1 row-cols-md-2 g-4">
+        <div class="col" *ngFor="let country of countriesToShow">
+          <div className="card" class="card">
+            <a routerLink="/country/{{ country.alpha3Code }}">
+              <img
+                [src]="country.flags.svg"
+                class="card-img-top"
+                [alt]="country.name.common"
+              />
+            </a>
+
+            <div class="card-body">
+              <h5 class="card-title">{{ country.name.common }}</h5>
+              <p class="card-text">
+                <strong>Population:</strong> {{ country.population | number
+                }}<br />
+                <strong>Languages:</strong>
+                {{ getCountryLanguageList(country.languages) }}<br />
+                <strong>Region:</strong> {{ country.region }}<br />
+                <strong>Subregion:</strong> {{ country.subregion }}
+              </p>
+              <button class="btn btn-primary" (click)="toggleFavorite(country)">
+                <i *ngIf="country.isFavorite" class="bi bi-heart-fill"></i>
+                <i *ngIf="!country.isFavorite" class="bi bi-heart"></i>
+                {{
+                  country.isFavorite
+                    ? "Remove from favorites"
+                    : "Add to favorites"
+                }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button
+          class="btn btn-primary"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          Previous
+        </button>
+        <button
+          class="btn btn-primary"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
