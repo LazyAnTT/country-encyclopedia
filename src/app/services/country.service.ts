@@ -27,7 +27,7 @@ export class CountryService {
           country.subregion = item.subregion;
           country.population = item.population;
           country.populationRank = item.populationRank;
-          country.flags.svg= item.flags.svg;
+          country.flags.svg = item.flags.svg;
           country.area = item.area;
           country.neighbors = item.borders;
           country.languages = Object.keys(item.languages || {}).map((key) => {
@@ -45,31 +45,38 @@ export class CountryService {
   }
 
   getCountryByCode(code: string): Observable<Country> {
-    const url = 'https://restcountries.com/v3.1/alpha/${code}';
+    const url = `https://restcountries.com/v3.1/name/${code}`;
+
     return this.http.get<Country>(url).pipe(
       map((response: any) => {
+              const responseDestructured = response[0];
         const country = new Country();
         country.name = {
-          common: response.name?.common,
-          official: response.name?.official,
+          common: responseDestructured.name?.common,
+          official: responseDestructured.name?.official,
         };
-        country.alpha2Code = response.cca2;
-        country.alpha3Code = response.cca3;
-        country.region = response.region;
-        country.subregion = response.subregion;
-        country.population = response.population;
-        country.populationRank = response.populationRank;
-        country.flags.svg = response.flags.svg;
-        country.area = response.area;
-        country.neighbors = response.borders;
-        country.languages = Object.keys(response.languages || {}).map((key) => {
-          const language: Language = {
+        country.alpha2Code = responseDestructured.cca2;
+        country.alpha3Code = responseDestructured.cca3;
+        country.region = responseDestructured.region;
+        country.subregion = responseDestructured.subregion;
+        country.population = responseDestructured.population;
+        country.populationRank = responseDestructured.populationRank;
+        country.flags.svg = responseDestructured.flags.svg;
+        country.area = responseDestructured.area;
+        country.neighbors = responseDestructured.borders;
+        // country.languages = responseDestructured.languages.cnr
+        country.languages = Object.keys(
+          responseDestructured.languages || {}
+        ).map((key) => {
+                   const language: Language = {
             code: key,
-            name: response.languages[key],
+            name: responseDestructured.languages[key],
           };
           return language;
         });
-        country.translations = response.translations as Translations;
+       
+        country.translations =
+          responseDestructured.translations as Translations;
         return country;
       })
     );

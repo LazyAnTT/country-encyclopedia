@@ -13,6 +13,8 @@ import { CountryDetailsComponent } from './country-details/country-details.compo
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'country/:code', component: CountryDetailsComponent },
+
  
 ];
 

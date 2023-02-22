@@ -1,1 +1,74 @@
-<p>country-details works!</p>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card my-3">
+        <div class="card-header">
+          <div class="header-wrapper">
+            <h2>{{ country.name.common }}</h2>
+
+            <button (click)="navigateToHome()" class="btn btn-primary">
+              <i class="bi bi-arrow-left"></i> Back
+            </button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <img
+                [src]="country.flags.svg"
+                [alt]="country.name.common"
+                class="img-fluid"
+              />
+            </div>
+            <div class="col-md-6">
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <strong>Common Name:</strong> {{ country.name.common }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Official Name:</strong> {{ country.name.official }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Country Code:</strong> {{ country.alpha2Code }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Population:</strong> {{ country.population | number }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Population Rank:</strong> {{ country.populationRank }}
+                </li>
+                <li class="list-group-item">
+                  <strong>Area:</strong> {{ country.area | number }} km²
+                </li>
+                <li class="list-group-item">
+                  <strong>Neighboring Countries:</strong>
+                  <ul>
+                    <li *ngFor="let neighbor of country.neighbors">
+                      {{ neighbor }}
+                    </li>
+                  </ul>
+                </li>
+                <li class="list-group-item">
+                  <strong>Languages:</strong>
+                  <ul>
+                    <li *ngFor="let language of country.languages">
+                      {{ language.name }}
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+              <button
+                class="btn btn-primary marginTop"
+                (click)="toggleFavorite()"
+              >
+                <i *ngIf="isFavorite" class="bi bi-heart-fill"></i>
+                <i *ngIf="!isFavorite" class="bi bi-heart"></i>
+                {{ isFavorite ? "Remove from favorites" : "Add to favorites" }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
