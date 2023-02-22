@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
   countries: Country[] = [];
   searchQuery = '';
   countriesToShow: Country[] = [];
-   itemsPerPage = 4;
+  itemsPerPage = 4;
   currentPage = 1;
   totalPages = 0;
   favoriteCountries: Country[] = [];
@@ -36,7 +36,6 @@ export class HomeComponent implements OnInit {
       this.currentPage * this.itemsPerPage
     );
     this.totalPages = Math.ceil(filteredCountries.length / this.itemsPerPage);
-  
   }
 
   ngOnInit(): void {
@@ -58,10 +57,9 @@ export class HomeComponent implements OnInit {
     });
   }
 
-
   viewCountryDetails(country: Country): void {
     this.router.navigate(['/country', country.name.common]);
-  } 
+  }
 
   getCountryLanguageList(languageList: Language[]): string {
     const validLanguages = languageList.filter(
